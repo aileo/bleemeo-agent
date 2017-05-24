@@ -413,6 +413,11 @@ def sanitize_service(name, service_info, is_discovered_service):
             )
             return None
 
+    # Set address to None by default for nagios services
+    if (service_info.get('check_type') == 'nagios'
+            and 'address' not in service_info):
+        service_info.setdefault('address', None)
+
     if (service_info.get('check_type') == 'nagios'
             and 'check_command' not in service_info):
         logging.info(
